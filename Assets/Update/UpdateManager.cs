@@ -5,27 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class UpdateManager : MonoBehaviour
 {
+    [SerializeField]
     IMonoData monoData = null;
 
     private void Awake()
     {
-        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-        foreach (var item in objects)
+        if(monoData == null)
         {
-            
-            if(item.TryGetComponent<IMonoData>(out monoData))
-            {
-                break;
-            }
-        }
+            GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-        if(monoData == null) { throw new System.NullReferenceException(); }
+            foreach (var item in objects)
+            {
+
+                if (item.TryGetComponent<IMonoData>(out monoData))
+                {
+                    break;
+                }
+            }
+
+            if (monoData == null) { throw new System.NullReferenceException(); }
+        }
+        
     }
 
     void Update()
     {
-        foreach (var item in monoData.AllUpdate)
+        foreach (var item in monoData.AllUpdates)
         {
             item?.ThisUpdate();
         }
@@ -33,7 +39,7 @@ public class UpdateManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        foreach (var item in monoData.AllLateUpdate)
+        foreach (var item in monoData.AllLateUpdates)
         {
             item?.ThisLateUpdate();
         }
@@ -41,7 +47,7 @@ public class UpdateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (var item in monoData.AllFixedUpdate)
+        foreach (var item in monoData.AllFixedUpdates)
         {
             item?.ThisFixedUpdates();
         }

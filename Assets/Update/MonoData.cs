@@ -10,22 +10,22 @@ public enum MonoSwitch
 
 public class MonoData : MonoBehaviour,IMonoData
 {
-    public List<IUpdate> AllUpdate { get;private set; } = new List<IUpdate>();
+    public List<IUpdate> AllUpdates { get;private set; } = new List<IUpdate>();
 
-    public List<ILateUpdate> AllLateUpdate { get;private set; } = new List<ILateUpdate>();
+    public List<ILateUpdate> AllLateUpdates { get;private set; } = new List<ILateUpdate>();
 
-    public List<IFixedUpdate> AllFixedUpdate { get;private set; } = new List<IFixedUpdate>();
+    public List<IFixedUpdate> AllFixedUpdates { get;private set; } = new List<IFixedUpdate>();
 
     public void ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch)
     {
         switch (monoSwitch)
         {
             case MonoSwitch.Add:
-                AllUpdate.Add(update);
+                AllUpdates.Add(update);
                 break;
 
             case MonoSwitch.Remove:
-                AllUpdate.Remove(update);
+                AllUpdates.Remove(update);
                 break;
         }
     }
@@ -35,11 +35,11 @@ public class MonoData : MonoBehaviour,IMonoData
         switch (monoSwitch)
         {
             case MonoSwitch.Add:
-                AllFixedUpdate.Add(fixedUpdate);
+                AllFixedUpdates.Add(fixedUpdate);
                 break;
 
             case MonoSwitch.Remove:
-                AllFixedUpdate.Remove(fixedUpdate);
+                AllFixedUpdates.Remove(fixedUpdate);
                 break;
         }
     }
@@ -49,11 +49,11 @@ public class MonoData : MonoBehaviour,IMonoData
         switch (monoSwitch)
         {
             case MonoSwitch.Add:
-                AllLateUpdate.Add(lateUpdate);
+                AllLateUpdates.Add(lateUpdate);
                 break;
 
             case MonoSwitch.Remove:
-                AllLateUpdate.Remove(lateUpdate);
+                AllLateUpdates.Remove(lateUpdate);
                 break;
         }
     }
