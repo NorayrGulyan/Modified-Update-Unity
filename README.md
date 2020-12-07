@@ -7,5 +7,5 @@
 #### 3. An object that implements the interfaces must be passed the MotoData list of the same name
    - AllUpdates
    - AllFixedUpdates
-   - AllFixedUpdate
+   - AllLateUpdate
 #### 4. Add component UpdateManager;
