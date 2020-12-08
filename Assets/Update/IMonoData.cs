@@ -2,11 +2,6 @@
 
 public interface IMonoData
 {
-    List<IUpdate> AllUpdates { get;}
-
-    List<ILateUpdate> AllLateUpdates { get; }
-
-    List<IFixedUpdate> AllFixedUpdates { get; }
 
     void ImplementationUpdate(IUpdate update ,MonoSwitch monoSwitch);
 

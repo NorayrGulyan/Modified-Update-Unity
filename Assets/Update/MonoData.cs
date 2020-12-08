@@ -10,11 +10,11 @@ public enum MonoSwitch
 
 public class MonoData : MonoBehaviour,IMonoData
 {
-    public List<IUpdate> AllUpdates { get;private set; } = new List<IUpdate>();
+    protected private List<IUpdate> AllUpdates { get;private set; } = new List<IUpdate>();
 
-    public List<ILateUpdate> AllLateUpdates { get;private set; } = new List<ILateUpdate>();
+    protected private List<ILateUpdate> AllLateUpdates { get;private set; } = new List<ILateUpdate>();
 
-    public List<IFixedUpdate> AllFixedUpdates { get;private set; } = new List<IFixedUpdate>();
+    protected private List<IFixedUpdate> AllFixedUpdates { get;private set; } = new List<IFixedUpdate>();
 
     public void ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch)
     {
@@ -56,11 +56,6 @@ public class MonoData : MonoBehaviour,IMonoData
                 AllLateUpdates.Remove(lateUpdate);
                 break;
         }
-    }
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
     }
 
 }
