@@ -2,60 +2,99 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MonoSwitch
+namespace Update.System
 {
-    Add,
-    Remove
-}
-
-public class MonoData : MonoBehaviour,IMonoData
-{
-    protected private List<IUpdate> AllUpdates { get;private set; } = new List<IUpdate>();
-
-    protected private List<ILateUpdate> AllLateUpdates { get;private set; } = new List<ILateUpdate>();
-
-    protected private List<IFixedUpdate> AllFixedUpdates { get;private set; } = new List<IFixedUpdate>();
-
-    public void ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch)
+    public enum MonoSwitch
     {
-        switch (monoSwitch)
-        {
-            case MonoSwitch.Add:
-                AllUpdates.Add(update);
-                break;
-
-            case MonoSwitch.Remove:
-                AllUpdates.Remove(update);
-                break;
-        }
+        Add,
+        Remove
     }
 
-    public void ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch)
+    public abstract class MonoData : MonoBehaviour, IMonoData
     {
-        switch (monoSwitch)
-        {
-            case MonoSwitch.Add:
-                AllFixedUpdates.Add(fixedUpdate);
-                break;
+        protected private List<Update> Updates { get; private set; } = new List<Update>();
 
-            case MonoSwitch.Remove:
-                AllFixedUpdates.Remove(fixedUpdate);
-                break;
+        protected private List<ILateUpdate> LateUpdates { get; private set; } = new List<ILateUpdate>();
+
+        protected private List<IFixedUpdate> FixedUpdates { get; private set; } = new List<IFixedUpdate>();
+
+        public bool ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch, int scriptOrder = 0,int orderCount = 0)
+        {
+            Update upd;
+
+            if (orderCount <= 0)
+            {
+                upd = new Update(update, scriptOrder);
+            }
+            else upd = new Update(update, scriptOrder,orderCount,Updates.Remove);
+
+
+            switch (monoSwitch)
+            {
+                case MonoSwitch.Add:
+
+                    if (Updates.Contains(upd))
+                    {
+                        Debug.LogWarning("Element already exists");
+                        return false;
+                    }
+                    else
+                    {
+                        Updates.Add(upd);
+                        Updates.Sort();
+                        return true;
+                    }
+
+                case MonoSwitch.Remove:
+                    return Updates.Remove(upd);
+            }
+            return false;
+        }
+
+        public bool ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch)
+        {
+            switch (monoSwitch)
+            {
+                case MonoSwitch.Add:
+
+                    if (FixedUpdates.Contains(fixedUpdate))
+                    {
+                        Debug.LogWarning("Element already exists");
+                        return false;
+                    }
+                    else
+                    {
+                        FixedUpdates.Add(fixedUpdate);
+                        return true;
+                    }
+
+                case MonoSwitch.Remove:
+                    return FixedUpdates.Remove(fixedUpdate);
+            }
+            return false;
+        }
+
+        public bool ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch)
+        {
+            switch (monoSwitch)
+            {
+                case MonoSwitch.Add:
+
+                    if (LateUpdates.Contains(lateUpdate))
+                    {
+                        Debug.LogWarning("Element already exists");
+                        return false;
+                    }
+                    else
+                    {
+                        LateUpdates.Add(lateUpdate);
+                        return true;
+                    }
+
+                case MonoSwitch.Remove:
+                    return LateUpdates.Remove(lateUpdate);
+            }
+            return false;
         }
     }
-
-    public void ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch)
-    {
-        switch (monoSwitch)
-        {
-            case MonoSwitch.Add:
-                AllLateUpdates.Add(lateUpdate);
-                break;
-
-            case MonoSwitch.Remove:
-                AllLateUpdates.Remove(lateUpdate);
-                break;
-        }
-    }
-
 }

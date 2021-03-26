@@ -1,4 +1,8 @@
-﻿public interface IFixedUpdate
+﻿
+namespace Update.System
 {
-    void ThisFixedUpdates();
+    public interface IFixedUpdate
+    {
+        void ThisFixedUpdates();
+    }
 }

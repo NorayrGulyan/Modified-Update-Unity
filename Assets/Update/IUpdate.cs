@@ -1,5 +1,8 @@
-﻿public interface IUpdate
+﻿
+namespace Update.System
 {
-    void ThisUpdate();
-
+    public interface IUpdate
+    {
+        void ThisUpdate();
+    }
 }

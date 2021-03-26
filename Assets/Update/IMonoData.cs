@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-
-public interface IMonoData
+﻿
+namespace Update.System
 {
+    public interface IMonoData
+    {
+        bool ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch, int scriptOrder = 0, int orderCount = 0);
 
-    void ImplementationUpdate(IUpdate update ,MonoSwitch monoSwitch);
+        bool ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch);
 
-    void ImplementationFixedUpdate(IFixedUpdate fixedUpdate,MonoSwitch monoSwitch);
-
-    void ImplementationLateUpdate(ILateUpdate lateUpdate ,MonoSwitch monoSwitch);
+        bool ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch);
+    }
 }
+

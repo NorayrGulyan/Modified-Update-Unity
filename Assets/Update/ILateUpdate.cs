@@ -1,5 +1,8 @@
-﻿public interface ILateUpdate
+﻿
+namespace Update.System
 {
-    void ThisLateUpdate();
-
+    public interface ILateUpdate
+    {
+        void ThisLateUpdate();
+    }
 }

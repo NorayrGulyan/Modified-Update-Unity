@@ -3,52 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UpdateManager : MonoData
+
+namespace Update.System
 {
-    static IMonoData monoData = null;
-
-    public static IMonoData MonoData
+    public sealed class UpdateManager : MonoData
     {
-        get
+        static IMonoData monoData = null;
+
+        public static IMonoData MonoData
         {
-            if(monoData == null)
+            get
             {
-                monoData = (IMonoData)FindObjectOfType(typeof(UpdateManager));
+                if (monoData == null)
+                {
+                    monoData = (IMonoData)FindObjectOfType(typeof(UpdateManager));
+                }
+
+                return monoData;
+
             }
-
-            return monoData;
-
         }
-    }
 
-    private UpdateManager() { }
+        private UpdateManager() { }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
-
-    void Update()
-    {
-        foreach (var item in AllUpdates)
+        private void Awake()
         {
-            item?.ThisUpdate();
+            monoData = this;
+
+            DontDestroyOnLoad(this);
         }
-    }
 
-    private void LateUpdate()
-    {
-        foreach (var item in AllLateUpdates)
+        void Update()
         {
-            item?.ThisLateUpdate();
+            for (int i = 0; i < Updates.Count; i++)
+            {
+                int count = Updates.Count;
+
+                Updates[i].update?.ThisUpdate();
+
+                while (count > Updates.Count && Updates.Count > 0)
+                {
+                    if (i > Updates.Count - 1) break;
+                    Updates[i].update?.ThisUpdate();
+                    count--;
+                }
+            }
         }
-    }
 
-    private void FixedUpdate()
-    {
-        foreach (var item in AllFixedUpdates)
+        private void LateUpdate()
         {
-            item?.ThisFixedUpdates();
+            foreach (var item in LateUpdates)
+            {
+                item?.ThisLateUpdate();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            foreach (var item in FixedUpdates)
+            {
+                item?.ThisFixedUpdates();
+            }
         }
     }
 }
+
+
