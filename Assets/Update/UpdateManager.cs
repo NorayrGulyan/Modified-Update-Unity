@@ -52,17 +52,35 @@ namespace Update.System
 
         private void LateUpdate()
         {
-            foreach (var item in LateUpdates)
+            for (int i = 0; i < LateUpdates.Count; i++)
             {
-                item?.ThisLateUpdate();
+                int count = LateUpdates.Count;
+
+                LateUpdates[i].update?.ThisLateUpdate();
+
+                while (count > LateUpdates.Count && LateUpdates.Count > 0)
+                {
+                    if (i > LateUpdates.Count - 1) break;
+                    LateUpdates[i].update?.ThisLateUpdate();
+                    count--;
+                }
             }
         }
 
         private void FixedUpdate()
         {
-            foreach (var item in FixedUpdates)
+            for (int i = 0; i < FixedUpdates.Count; i++)
             {
-                item?.ThisFixedUpdates();
+                int count = FixedUpdates.Count;
+
+                FixedUpdates[i].update?.ThisFixedUpdates();
+
+                while (count > FixedUpdates.Count && FixedUpdates.Count > 0)
+                {
+                    if (i > FixedUpdates.Count - 1) break;
+                    FixedUpdates[i].update?.ThisFixedUpdates();
+                    count--;
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿
 namespace Update.System
 {
-    public interface IUpdate
+    public interface IUpdate : IBase
     {
         void ThisUpdate();
     }

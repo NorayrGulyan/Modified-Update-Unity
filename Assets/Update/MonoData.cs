@@ -12,21 +12,21 @@ namespace Update.System
 
     public abstract class MonoData : MonoBehaviour, IMonoData
     {
-        protected private List<Update> Updates { get; private set; } = new List<Update>();
+        protected private List<Update<IUpdate>> Updates { get; private set; } = new List<Update<IUpdate>>();
 
-        protected private List<ILateUpdate> LateUpdates { get; private set; } = new List<ILateUpdate>();
+        protected private List<Update<ILateUpdate>> LateUpdates { get; private set; } = new List<Update<ILateUpdate>>();
 
-        protected private List<IFixedUpdate> FixedUpdates { get; private set; } = new List<IFixedUpdate>();
+        protected private List<Update<IFixedUpdate>> FixedUpdates { get; private set; } = new List<Update<IFixedUpdate>>();
 
         public bool ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch, int scriptOrder = 0,int orderCount = 0)
         {
-            Update upd;
+            Update<IUpdate> upd;
 
             if (orderCount <= 0)
             {
-                upd = new Update(update, scriptOrder);
+                upd = new Update<IUpdate>(update, scriptOrder);
             }
-            else upd = new Update(update, scriptOrder,orderCount,Updates.Remove);
+            else upd = new Update<IUpdate>(update, scriptOrder,orderCount,Updates.Remove);
 
 
             switch (monoSwitch)
@@ -51,48 +51,69 @@ namespace Update.System
             return false;
         }
 
-        public bool ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch)
+        public bool ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch,int scriptOrder = 0, int orderCount = 0)
         {
+
+            Update<IFixedUpdate> upd;
+
+            if (orderCount <= 0)
+            {
+                upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder);
+            }
+            else upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder, orderCount, FixedUpdates.Remove);
+
+
             switch (monoSwitch)
             {
                 case MonoSwitch.Add:
 
-                    if (FixedUpdates.Contains(fixedUpdate))
+                    if (FixedUpdates.Contains(upd))
                     {
                         Debug.LogWarning("Element already exists");
                         return false;
                     }
                     else
                     {
-                        FixedUpdates.Add(fixedUpdate);
+                        FixedUpdates.Add(upd);
+                        FixedUpdates.Sort();
                         return true;
                     }
 
                 case MonoSwitch.Remove:
-                    return FixedUpdates.Remove(fixedUpdate);
+                    return FixedUpdates.Remove(upd);
             }
             return false;
         }
 
-        public bool ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch)
+        public bool ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch, int scriptOrder = 0, int orderCount = 0)
         {
+            Update<ILateUpdate> upd;
+
+            if (orderCount <= 0)
+            {
+                upd = new Update<ILateUpdate>(lateUpdate, scriptOrder);
+            }
+            else upd = new Update<ILateUpdate>(lateUpdate, scriptOrder, orderCount, LateUpdates.Remove);
+
+
             switch (monoSwitch)
             {
                 case MonoSwitch.Add:
 
-                    if (LateUpdates.Contains(lateUpdate))
+                    if (LateUpdates.Contains(upd))
                     {
                         Debug.LogWarning("Element already exists");
                         return false;
                     }
                     else
                     {
-                        LateUpdates.Add(lateUpdate);
+                        LateUpdates.Add(upd);
+                        LateUpdates.Sort();
                         return true;
                     }
 
                 case MonoSwitch.Remove:
-                    return LateUpdates.Remove(lateUpdate);
+                    return LateUpdates.Remove(upd);
             }
             return false;
         }

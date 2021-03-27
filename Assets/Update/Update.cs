@@ -2,15 +2,16 @@
 
 namespace Update.System
 {
-    internal class Update : IComparable
+    internal class Update<T> : IComparable
+        where T : IBase
     {
-        IUpdate update1;
+        T update1;
 
         bool order;
 
-        Func<Update, bool> deleatThis;
+        Func<Update<T>, bool> deleatThis;
 
-        public IUpdate update
+        public T update
         {
             get
             {
@@ -27,7 +28,7 @@ namespace Update.System
                 else
                 {
                     deleatThis?.Invoke(this);
-                    return null;
+                    return default;
                 }
             }
 
@@ -40,17 +41,16 @@ namespace Update.System
 
         public int CalleCount { get; private set; }
 
-        public Update(IUpdate update, int scriptExecutionOrder)
+        public Update(T update, int scriptExecutionOrder)
         {
             this.update = update;
             ScriptExecutionOrder = scriptExecutionOrder;
-
             OrderCount = 0;
-
             order = false;
         }
 
-        public Update(IUpdate update, int scriptExecutionOrder, int orderCount,Func<Update, bool> deleatThis) : this(update, scriptExecutionOrder)
+        public Update(T update, int scriptExecutionOrder, int orderCount,Func<Update<T>, bool> deleatThis) :
+            this(update, scriptExecutionOrder)
         {
             OrderCount = orderCount;
             order = true;
@@ -59,7 +59,7 @@ namespace Update.System
 
         public int CompareTo(object obj)
         {
-            Update u = obj as Update;
+            Update<T> u = obj as Update<T>;
 
             if (u != null)
             {

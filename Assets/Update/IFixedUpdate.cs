@@ -1,7 +1,7 @@
 ﻿
 namespace Update.System
 {
-    public interface IFixedUpdate
+    public interface IFixedUpdate : IBase
     {
         void ThisFixedUpdates();
     }
