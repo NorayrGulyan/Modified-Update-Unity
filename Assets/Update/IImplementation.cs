@@ -7,31 +7,31 @@ namespace Update.System
         /// 
         /// </summary>
         /// <param name="update">Interface IUpdate</param>
-        /// <param name="monoSwitch"></param>
+        /// <param name="switch"></param>
         /// <param name="scriptOrder"></param>
         /// <param name="orderCount"></param>
         /// <returns>True if Implementation is successfully integrated or removed/returns>
-        bool Update(in IUpdate update,in MonoSwitch monoSwitch,in int scriptOrder = 0,in int orderCount = 0);
+        bool Update(in IUpdate update,in Switch @switch,in int scriptOrder = 0,in int orderCount = 0);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fixedUpdate">Interface IFixedUpdate</param>
-        /// <param name="monoSwitch"></param>
+        /// <param name="switch"></param>
         /// <param name="scriptOrder"></param>
         /// <param name="orderCount"></param>
         /// <returns>True if Implementation is successfully integrated or removed</returns>
-        bool FixedUpdate(in IFixedUpdate fixedUpdate,in MonoSwitch monoSwitch,in int scriptOrder = 0,in int orderCount = 0);
+        bool FixedUpdate(in IFixedUpdate fixedUpdate,in Switch @switch, in int scriptOrder = 0,in int orderCount = 0);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="lateUpdate">Interface ILateUpdate</param>
-        /// <param name="monoSwitch"></param>
+        /// <param name="switch"></param>
         /// <param name="scriptOrder"></param>
         /// <param name="orderCount"></param>
         /// <returns>True if Implementation is successfully integrated or removed</returns>
-        bool LateUpdate(in ILateUpdate lateUpdate,in MonoSwitch monoSwitch,in int scriptOrder = 0,in int orderCount = 0);
+        bool LateUpdate(in ILateUpdate lateUpdate,in Switch @switch, in int scriptOrder = 0,in int orderCount = 0);
     }
 }
 
