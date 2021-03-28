@@ -1,5 +1,6 @@
 # Modified Update in Unity
 ### Optimization of the function Update,FixedUpdate,LateUpdate;
+### You can also script execution order and execution count;
 
 #### 1. First add component (UpdateManager)-Script.
 
