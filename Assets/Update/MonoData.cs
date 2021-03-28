@@ -10,7 +10,7 @@ namespace Update.System
         Remove
     }
 
-    public abstract class MonoData : MonoBehaviour, IMonoData
+    public abstract class MonoData : MonoBehaviour, IImplementation
     {
         protected private List<Update<IUpdate>> Updates { get; private set; } = new List<Update<IUpdate>>();
 
@@ -18,7 +18,7 @@ namespace Update.System
 
         protected private List<Update<IFixedUpdate>> FixedUpdates { get; private set; } = new List<Update<IFixedUpdate>>();
 
-        public bool ImplementationUpdate(IUpdate update, MonoSwitch monoSwitch, int scriptOrder = 0,int orderCount = 0)
+        public bool Update(in IUpdate update, in MonoSwitch monoSwitch, in int scriptOrder = 0, in int orderCount = 0)
         {
             Update<IUpdate> upd;
 
@@ -51,7 +51,7 @@ namespace Update.System
             return false;
         }
 
-        public bool ImplementationFixedUpdate(IFixedUpdate fixedUpdate, MonoSwitch monoSwitch,int scriptOrder = 0, int orderCount = 0)
+        public bool FixedUpdate(in IFixedUpdate fixedUpdate, in MonoSwitch monoSwitch, in int scriptOrder = 0, in int orderCount = 0)
         {
 
             Update<IFixedUpdate> upd;
@@ -85,7 +85,7 @@ namespace Update.System
             return false;
         }
 
-        public bool ImplementationLateUpdate(ILateUpdate lateUpdate, MonoSwitch monoSwitch, int scriptOrder = 0, int orderCount = 0)
+        public bool LateUpdate(in ILateUpdate lateUpdate, in MonoSwitch monoSwitch, in int scriptOrder = 0, in int orderCount = 0)
         {
             Update<ILateUpdate> upd;
 

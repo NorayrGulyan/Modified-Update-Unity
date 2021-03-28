@@ -1,6 +1,6 @@
 ﻿namespace Update.System
 {
-    public interface IBase
+    public interface IBaseUpdate
     {
     }
 }

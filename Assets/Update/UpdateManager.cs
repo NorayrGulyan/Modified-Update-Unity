@@ -8,18 +8,18 @@ namespace Update.System
 {
     public sealed class UpdateManager : MonoData
     {
-        static IMonoData monoData = null;
+        static IImplementation implementation = null;
 
-        public static IMonoData MonoData
+        public static IImplementation Implementation
         {
             get
             {
-                if (monoData == null)
+                if (implementation == null)
                 {
-                    monoData = (IMonoData)FindObjectOfType(typeof(UpdateManager));
+                    implementation = (IImplementation)FindObjectOfType(typeof(UpdateManager));
                 }
 
-                return monoData;
+                return implementation;
 
             }
         }
@@ -28,7 +28,7 @@ namespace Update.System
 
         private void Awake()
         {
-            monoData = this;
+            implementation = this;
 
             DontDestroyOnLoad(this);
         }

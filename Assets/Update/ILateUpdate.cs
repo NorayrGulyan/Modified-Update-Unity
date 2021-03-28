@@ -1,7 +1,7 @@
 ﻿
 namespace Update.System
 {
-    public interface ILateUpdate : IBase
+    public interface ILateUpdate : IBaseUpdate
     {
         void ThisLateUpdate();
     }

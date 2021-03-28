@@ -3,7 +3,7 @@
 namespace Update.System
 {
     internal class Update<T> : IComparable
-        where T : IBase
+        where T : IBaseUpdate
     {
         T update1;
 

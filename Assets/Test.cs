@@ -16,7 +16,7 @@ public class Test : MonoBehaviour, IUpdate
 
     private void Start()
     {
-        UpdateManager.MonoData.ImplementationUpdate(this, MonoSwitch.Add, scriptExecutionOrder, orderCount);
+        UpdateManager.Implementation.Update(this, MonoSwitch.Add, scriptExecutionOrder, orderCount);
     }
 
     public void ThisUpdate()
