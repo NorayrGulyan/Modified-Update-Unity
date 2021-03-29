@@ -24,6 +24,8 @@ namespace Update.System
             }
         }
 
+        public IImplementation GetImplementation => this;
+
         private UpdateManager() { }
 
         private void Awake()

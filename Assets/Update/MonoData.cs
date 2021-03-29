@@ -12,21 +12,21 @@ namespace Update.System
 
     public abstract class MonoData : MonoBehaviour, IImplementation
     {
-        protected private List<Update<IUpdate>> Updates { get; private set; } = new List<Update<IUpdate>>();
+        internal List<Update<IUpdate>> Updates { get; private set; } = new List<Update<IUpdate>>();
 
-        protected private List<Update<ILateUpdate>> LateUpdates { get; private set; } = new List<Update<ILateUpdate>>();
+        internal List<Update<ILateUpdate>> LateUpdates { get; private set; } = new List<Update<ILateUpdate>>();
 
-        protected private List<Update<IFixedUpdate>> FixedUpdates { get; private set; } = new List<Update<IFixedUpdate>>();
+        internal List<Update<IFixedUpdate>> FixedUpdates { get; private set; } = new List<Update<IFixedUpdate>>();
 
-        public bool Update(in IUpdate update, in Switch @switch, in int scriptOrder = 0, in int orderCount = 0)
+        public bool Update(in IUpdate update, in Switch @switch,in string name ,in int scriptOrder = 0, in int orderCount = 0)
         {
             Update<IUpdate> upd;
 
             if (orderCount <= 0)
             {
-                upd = new Update<IUpdate>(update, scriptOrder);
+                upd = new Update<IUpdate>(update, scriptOrder, name);
             }
-            else upd = new Update<IUpdate>(update, scriptOrder,orderCount,Updates.Remove);
+            else upd = new Update<IUpdate>(update, scriptOrder, name, orderCount, Updates.Remove);
 
 
             switch (@switch)
@@ -51,16 +51,16 @@ namespace Update.System
             return false;
         }
 
-        public bool FixedUpdate(in IFixedUpdate fixedUpdate, in Switch @switch, in int scriptOrder = 0, in int orderCount = 0)
+        public bool FixedUpdate(in IFixedUpdate fixedUpdate, in Switch @switch, in string name, in int scriptOrder = 0, in int orderCount = 0)
         {
 
             Update<IFixedUpdate> upd;
 
             if (orderCount <= 0)
             {
-                upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder);
+                upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder, name);
             }
-            else upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder, orderCount, FixedUpdates.Remove);
+            else upd = new Update<IFixedUpdate>(fixedUpdate, scriptOrder, name, orderCount, FixedUpdates.Remove);
 
 
             switch (@switch)
@@ -85,15 +85,15 @@ namespace Update.System
             return false;
         }
 
-        public bool LateUpdate(in ILateUpdate lateUpdate, in Switch @switch, in int scriptOrder = 0, in int orderCount = 0)
+        public bool LateUpdate(in ILateUpdate lateUpdate, in Switch @switch, in string name, in int scriptOrder = 0, in int orderCount = 0)
         {
             Update<ILateUpdate> upd;
 
             if (orderCount <= 0)
             {
-                upd = new Update<ILateUpdate>(lateUpdate, scriptOrder);
+                upd = new Update<ILateUpdate>(lateUpdate, scriptOrder, name);
             }
-            else upd = new Update<ILateUpdate>(lateUpdate, scriptOrder, orderCount, LateUpdates.Remove);
+            else upd = new Update<ILateUpdate>(lateUpdate, scriptOrder, name,orderCount, LateUpdates.Remove);
 
 
             switch (@switch)

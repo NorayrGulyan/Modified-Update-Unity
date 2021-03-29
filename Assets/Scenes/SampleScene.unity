@@ -373,7 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   num: 0
   scriptExecutionOrder: 0
-  orderCount: 10
+  orderCount: 100
 --- !u!4 &1439528516
 Transform:
   m_ObjectHideFlags: 0

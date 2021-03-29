@@ -11,18 +11,23 @@ namespace Update.System
 
         Func<Update<T>, bool> deleatThis;
 
+        public readonly string Name;
+
+        public bool Foldout;
+
         public T update
         {
             get
             {
                 if (!order)
                 {
+                    CallCount++;
                     return update1;
                 }
                 else if (OrderCount > 0)
                 {
                     OrderCount--;
-                    CalleCount++;
+                    CallCount++;
                     return update1;
                 }
                 else
@@ -39,18 +44,19 @@ namespace Update.System
 
         public int OrderCount { get;private set; }
 
-        public int CalleCount { get; private set; }
+        public int CallCount { get; private set; }
 
-        public Update(T update, int scriptExecutionOrder)
+        public Update(in T update,in int scriptExecutionOrder,in string name)
         {
             this.update = update;
             ScriptExecutionOrder = scriptExecutionOrder;
             OrderCount = 0;
             order = false;
+            Name = name;
         }
 
-        public Update(T update, int scriptExecutionOrder, int orderCount,Func<Update<T>, bool> deleatThis) :
-            this(update, scriptExecutionOrder)
+        public Update(in T update,in int scriptExecutionOrder,in string name ,in int orderCount,in Func<Update<T>, bool> deleatThis) :
+            this(update, scriptExecutionOrder,name)
         {
             OrderCount = orderCount;
             order = true;
