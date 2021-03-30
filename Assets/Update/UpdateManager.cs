@@ -33,6 +33,8 @@ namespace Update.System
             implementation = this;
 
             DontDestroyOnLoad(this);
+
+            SceneManager.activeSceneChanged += ClearAll;
         }
 
         void Update()
@@ -84,6 +86,15 @@ namespace Update.System
                     count--;
                 }
             }
+        }
+
+        private void ClearAll(Scene current, Scene next)
+        {
+            Updates.Clear();
+
+            LateUpdates.Clear();
+
+            FixedUpdates.Clear();
         }
     }
 }

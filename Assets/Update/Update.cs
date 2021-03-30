@@ -2,7 +2,7 @@
 
 namespace Update.System
 {
-    internal class Update<T> : IComparable
+    internal sealed class Update<T> : IComparable
         where T : IBaseUpdate
     {
         T update1;
@@ -11,11 +11,11 @@ namespace Update.System
 
         Func<Update<T>, bool> deleatThis;
 
-        public readonly string Name;
+        internal readonly string Name;
 
-        public bool Foldout;
+        internal bool Foldout;
 
-        public T update
+        internal T update
         {
             get
             {
@@ -40,13 +40,13 @@ namespace Update.System
             private set => update1 = value;
         }
 
-        public int ScriptExecutionOrder { get; private set; }
+        internal int ScriptExecutionOrder { get; private set; }
 
-        public int OrderCount { get;private set; }
+        internal int OrderCount { get;private set; }
 
-        public int CallCount { get; private set; }
+        internal int CallCount { get; private set; }
 
-        public Update(in T update,in int scriptExecutionOrder,in string name)
+        internal Update(in T update,in int scriptExecutionOrder,in string name)
         {
             this.update = update;
             ScriptExecutionOrder = scriptExecutionOrder;
@@ -55,7 +55,7 @@ namespace Update.System
             Name = name;
         }
 
-        public Update(in T update,in int scriptExecutionOrder,in string name ,in int orderCount,in Func<Update<T>, bool> deleatThis) :
+        internal Update(in T update,in int scriptExecutionOrder,in string name ,in int orderCount,in Func<Update<T>, bool> deleatThis) :
             this(update, scriptExecutionOrder,name)
         {
             OrderCount = orderCount;

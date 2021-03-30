@@ -11,6 +11,8 @@ using System;
 public class UpdateManagerEditor : Editor
 {
 
+    bool[] foldouts = new bool[3]; 
+
     public override void OnInspectorGUI()
     {
         UpdateManager updateManager = (UpdateManager)target;
@@ -24,7 +26,8 @@ public class UpdateManagerEditor : Editor
 
         GUILayout.Space(10);
         GUI.backgroundColor = Color.green;
-        GUILayout.Label($"Update  { updateManager.Updates.Count}");
+        foldouts[0] = EditorGUILayout.Foldout(foldouts[0], $"Update  { updateManager.Updates.Count}");
+        if (foldouts[0])
         for (int i = 0; i < updateManager.Updates.Count; i++)
         {
             updateManager.Updates[i].Foldout = EditorGUILayout.Foldout(updateManager.Updates[i].Foldout
@@ -41,7 +44,8 @@ public class UpdateManagerEditor : Editor
 
         GUILayout.Space(10);
         GUI.backgroundColor = Color.yellow;
-        GUILayout.Label($"LateUpdate  { updateManager.LateUpdates.Count}");
+        foldouts[1] = EditorGUILayout.Foldout(foldouts[1], $"LateUpdate  { updateManager.LateUpdates.Count}");
+        if (foldouts[1])
         for (int i = 0; i < updateManager.LateUpdates.Count; i++)
         {
             updateManager.LateUpdates[i].Foldout = EditorGUILayout.Foldout(updateManager.LateUpdates[i].Foldout
@@ -58,7 +62,8 @@ public class UpdateManagerEditor : Editor
 
         GUILayout.Space(10);
         GUI.backgroundColor = Color.blue;
-        GUILayout.Label($"FixedUpdate  { updateManager.FixedUpdates.Count}");
+        foldouts[2] = EditorGUILayout.Foldout(foldouts[2], $"FixedUpdate  { updateManager.FixedUpdates.Count}");
+        if (foldouts[2])
         for (int i = 0; i < updateManager.FixedUpdates.Count; i++)
         {
             updateManager.FixedUpdates[i].Foldout = EditorGUILayout.Foldout(updateManager.FixedUpdates[i].Foldout
