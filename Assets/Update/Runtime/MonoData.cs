@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Update.System
@@ -9,7 +8,6 @@ namespace Update.System
         Add,
         Remove
     }
-
     public abstract class MonoData : MonoBehaviour, IImplementation
     {
         internal List<Update<IUpdate>> Updates { get; private set; } = new List<Update<IUpdate>>();

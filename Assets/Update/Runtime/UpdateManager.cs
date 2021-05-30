@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 
 
@@ -39,6 +37,26 @@ namespace Update.System
 
         void Update()
         {
+#if UNITY_EDITOR
+            for (int i = 0; i < Updates.Count; i++)
+            {
+                int count = Updates.Count;
+
+
+                Profiler.BeginSample(Updates[i].Name);
+                Updates[i].update?.ThisUpdate();
+                Profiler.EndSample();
+
+                while (count > Updates.Count && Updates.Count > 0)
+                {
+                    if (i > Updates.Count - 1) break;
+                    Profiler.BeginSample(Updates[i].Name);
+                    Updates[i].update?.ThisUpdate();
+                    Profiler.EndSample();
+                    count--;
+                }
+            }
+#else
             for (int i = 0; i < Updates.Count; i++)
             {
                 int count = Updates.Count;
@@ -52,14 +70,33 @@ namespace Update.System
                     count--;
                 }
             }
+#endif
         }
 
         private void LateUpdate()
         {
+#if UNITY_EDITOR
             for (int i = 0; i < LateUpdates.Count; i++)
             {
                 int count = LateUpdates.Count;
+                Profiler.BeginSample(LateUpdates[i].Name);
+                LateUpdates[i].update?.ThisLateUpdate();
+                Profiler.EndSample();
 
+                while (count > LateUpdates.Count && LateUpdates.Count > 0)
+                {
+                    
+                    if (i > LateUpdates.Count - 1) break;
+                    Profiler.BeginSample(LateUpdates[i].Name);
+                    LateUpdates[i].update?.ThisLateUpdate();
+                    Profiler.EndSample();
+                    count--;
+                }
+            }
+#else
+            for (int i = 0; i < LateUpdates.Count; i++)
+            {
+                int count = LateUpdates.Count;
                 LateUpdates[i].update?.ThisLateUpdate();
 
                 while (count > LateUpdates.Count && LateUpdates.Count > 0)
@@ -69,10 +106,29 @@ namespace Update.System
                     count--;
                 }
             }
+#endif
         }
 
         private void FixedUpdate()
         {
+#if UNITY_EDITOR
+            for (int i = 0; i < FixedUpdates.Count; i++)
+            {
+                int count = FixedUpdates.Count;
+                Profiler.BeginSample(FixedUpdates[i].Name);
+                FixedUpdates[i].update?.ThisFixedUpdates();
+                Profiler.EndSample();
+
+                while (count > FixedUpdates.Count && FixedUpdates.Count > 0)
+                {
+                    if (i > FixedUpdates.Count - 1) break;
+                    Profiler.BeginSample(FixedUpdates[i].Name);
+                    FixedUpdates[i].update?.ThisFixedUpdates();
+                    Profiler.EndSample();
+                    count--;
+                }
+            }
+#else
             for (int i = 0; i < FixedUpdates.Count; i++)
             {
                 int count = FixedUpdates.Count;
@@ -86,6 +142,7 @@ namespace Update.System
                     count--;
                 }
             }
+#endif
         }
 
         private void ClearAll(Scene current, Scene next)

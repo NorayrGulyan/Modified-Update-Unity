@@ -22,11 +22,17 @@ public class Test : MonoBehaviour, IUpdate,ILateUpdate
 
     public void ThisUpdate()
     {
-        Debug.Log(num);
+        for (int i = 0; i < 100000; i++)
+        {
+
+        }
     }
 
     public void ThisLateUpdate()
     {
-        Debug.Log(num);
+        for (int i = 0; i < 100000; i++)
+        {
+
+        }
     }
 }
